@@ -26,6 +26,7 @@
   (org-edit-src-content-indentation 0)
   (org-id-link-to-org-use-id t)
   (org-cite-export-processors '((latex . (biblatex "numeric-comp,sorting=none"))
+                                (hugo . (csl "ieee.csl")) ;; TODO: does this org-cite exporter work?
                                 (t . basic)))
   (org-cite-csl-styles-dir (expand-file-name "~/Documents/Library/Zotero/styles/"))
   (org-cite-global-bibliography `(,(expand-file-name "~/Documents/Library/zotero.bib")

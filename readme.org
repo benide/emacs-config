@@ -1,1 +1,21 @@
-New repo with my emacs config converted from [[https://github.com/radian-software/straight.el][straight]] to [[https://github.com/progfolio/elpaca][elpaca]]. It's kind of a constant work in progress. While switching to elpaca, I decided to switch from helm-bibtex to citar, and that isn't quite done. There are some other little things that I tried to clean up while converting that aren't done too.
+* My Emacs config
+
+This is a new repo with my emacs config converted from [[https://github.com/radian-software/straight.el][straight]] to [[https://github.com/progfolio/elpaca][elpaca]]. It's kind of a constant work in progress. While switching to elpaca, I decided to switch from helm-bibtex to citar, and that isn't quite done. There are some other little things that I tried to clean up while converting that also aren't done.
+
+** Problems
+
+- How can I get ob-lilypond to fontify properly?
+
+** Some neat things
+
+*** NixOS and vterm
+
+On NixOS, it's best to let Nix take care of compiling the vterm module. Since it's already there, we don't want elpaca to download it again and try to compile it. This code snippet allows elpaca to take care of it when it isn't installed, but otherwise stops elpaca from trying to install it even as a dependency (like when installing vterm-toggle).
+
+#+begin_src elisp
+(if (require 'vterm nil 'noerror)
+    (cl-pushnew 'vterm elpaca-ignored-dependencies)
+  (elpaca vterm
+    (require 'vterm)))
+#+end_src
+

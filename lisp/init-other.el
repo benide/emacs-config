@@ -23,18 +23,25 @@
   :mode ("\\.asy$" . asy-mode)
   :commands (asy-mode))
 
-;; TODO: possibly switch lilypond to gitlab.com/lilypond/lilypond
-;; TODO: possibly create a github repo and action that builds lilypond-words and install this mode from there
+;; TODO: org-babel fontification is broken with lilypond
 (elpaca-use-package
   (lilypond-mode :type git
-	             :host nil
-	             :repo "https://git.savannah.gnu.org/git/lilypond.git"
-	             :files ("elisp/*.el")
-                 :pre-build ("python" "scripts/build/lilypond-words.py" "--el" "--dir=elisp/"))
+;;                  :host nil
+;;                  :repo "https://git.savannah.gnu.org/git/lilypond.git"
+;;                  :files ("elisp/*.el")
+;;                  :pre-build ("python" "scripts/build/lilypond-words.py" "--el" "--dir=elisp/"))
+	             :host github
+	             :repo "benide/lilypond-mode"
+                 :files ("*.el"))
   :mode ("\\.ly$" . LilyPond-mode)
   :commands (LilyPond-mode))
 
-(elpaca-use-package vterm)
+;; note: When I install emacs via nix, I also use nix to install vterm. The following code ensures that when vterm is a dependency of something else, elpaca won't try to re-download and compile it.
+(if (require 'vterm nil 'noerror)
+    (cl-pushnew 'vterm elpaca-ignored-dependencies)
+  (elpaca vterm
+    (require 'vterm)))
+
 (elpaca-use-package vterm-toggle
   :after vterm
   :bind (("<f2>" . vterm-toggle-show)
@@ -43,13 +50,15 @@
          ("<f2>" . vterm-toggle-hide)
          ("C-<f2>" . vterm-toggle-insert-cd)))
 
+;; TODO: replace julia-vterm with julia-repl or julia-snail
 (elpaca-use-package julia-vterm)
+
+;; TODO: replace ob-julia-vterm with ob-jupyter
 (elpaca-use-package (ob-julia-vterm :type git
                                     :host github
                                     :repo "shg/ob-julia-vterm.el"
                                     ;; :commit 5893d75cdb9e687b98b99b3675165f4edf0083a6
                                     ))
-;; TODO: add julia-repl or julia-snail for working on scripts
 
 (elpaca-use-package magit
   :config
@@ -65,6 +74,17 @@
 (elpaca-use-package rg)
 (elpaca-use-package ag)
 
+(elpaca-use-package diminish)
+
+(elpaca-use-package highlight-parentheses
+  :diminish
+  :hook (prog-mode . highlight-parentheses-mode))
+
+(elpaca-use-package which-key
+  :defer 1
+  :diminish which-key-mode
+  :config (which-key-mode))
+
 ;; TODO: do I need any of the following?
 ;; async
 ;; f
@@ -76,17 +96,6 @@
 ;; smartparens
 ;; shackle
 ;; erc or rcirc
-
-(elpaca-use-package diminish)
-
-(elpaca-use-package highlight-parentheses
-  :diminish
-  :hook (prog-mode . highlight-parentheses-mode))
-
-(elpaca-use-package which-key
-  :defer 1
-  :diminish which-key-mode
-  :config (which-key-mode))
 
 ;; (elpaca-use-package s
 ;;   :config
