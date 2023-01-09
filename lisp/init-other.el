@@ -57,7 +57,7 @@
 (elpaca-use-package (ob-julia-vterm :type git
                                     :host github
                                     :repo "shg/ob-julia-vterm.el"
-                                    ;; :commit 5893d75cdb9e687b98b99b3675165f4edf0083a6
+                                    ;; :ref  "5893d75cdb9e687b98b99b3675165f4edf0083a6"
                                     ))
 
 (elpaca-use-package magit
