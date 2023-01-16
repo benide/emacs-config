@@ -10,12 +10,25 @@ This is a new repo with my emacs config converted from [[https://github.com/radi
 
 *** NixOS and vterm
 
-On NixOS, it's best to let Nix take care of compiling the vterm module. Since it's already there, we don't want elpaca to download it again and try to compile it. This code snippet allows elpaca to take care of it when it isn't installed, but otherwise stops elpaca from trying to install it even as a dependency (like when installing vterm-toggle).
+On NixOS, it's best to let Nix take care of compiling the vterm module. Since it's already there, we don't want elpaca to download it again and try to compile it. The following macro allows elpaca to take care of it when it isn't installed, but otherwise stops elpaca from trying to install it even as a dependency (like when installing vterm-toggle).
 
 #+begin_src elisp
-(if (require 'vterm nil 'noerror)
-    (cl-pushnew 'vterm elpaca-ignored-dependencies)
-  (elpaca vterm
-    (require 'vterm)))
+(defmacro ide/elpaca-use-package (package &rest body)
+  (if (locate-library (symbol-name `,package))
+      `(progn
+	     (cl-pushnew (quote ,package) elpaca-ignored-dependencies)
+	     (elpaca-use-package ,package :ensure nil ,@body))
+    `(elpaca-use-package ,package ,@body)))
+
+(ide/elpaca-use-package vterm :defer t)
+#+end_src
+
+*** use-package in Emacs 29
+
+As of Emacs 29, =use-package= is built in. This snippet only installs it when the function doesn't already exist.
+
+#+begin_src elisp
+(unless (fboundp 'use-package)
+  (elpaca use-package (require 'use-package)))
 #+end_src
 

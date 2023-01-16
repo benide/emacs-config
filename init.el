@@ -31,10 +31,14 @@
 ;; Packages, functions, etc.
 
 (require 'bootstrap-elpaca)
-
-;; Download use-package if it isn't built in
 (unless (fboundp 'use-package)
   (elpaca use-package (require 'use-package)))
+(defmacro ide/elpaca-use-package (package &rest body)
+  (if (locate-library (symbol-name `,package))
+      `(progn
+	     (cl-pushnew (quote ,package) elpaca-ignored-dependencies)
+	     (elpaca-use-package ,package :ensure nil ,@body))
+    `(elpaca-use-package ,package ,@body)))
 
 (require 'i3-integration)
 (require 'my-functions)

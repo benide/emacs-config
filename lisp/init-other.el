@@ -41,10 +41,7 @@
 ;;     (cl-pushnew 'vterm elpaca-ignored-dependencies)
 ;;   (elpaca vterm
 ;;     (require 'vterm)))
-(if (locate-library "vterm")
-    (cl-pushnew 'vterm elpaca-ignored-dependencies)
-  (elpaca vterm))
-(use-package vterm :ensure nil :defer t)
+(ide/elpaca-use-package vterm :defer t)
 
 (elpaca-use-package vterm-toggle
   :after vterm
