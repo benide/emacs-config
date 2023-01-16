@@ -12,11 +12,14 @@
 (defun ide/load-theme ()
   "Custom theme loader."
   (interactive)
+
   (set-face-attribute 'variable-pitch nil :family "Crimson" :height 140)
-  (set-face-attribute 'default nil :family "JuliaMono" :height 120)
-  (set-face-attribute 'fixed-pitch nil :family "JuliaMono" :height 120)
-  ;; (set-face-attribute 'default nil :family "Fira Code" :height 120)
-  ;; (set-face-attribute 'fixed-pitch nil :family "Fira Code" :height 120)
+  ;; (set-face-attribute 'default nil :family "JuliaMono" :height 120)
+  ;; (set-face-attribute 'fixed-pitch nil :family "JuliaMono" :height 120)
+  (set-face-attribute 'default nil :family "Fira Code" :height 120)
+  (set-face-attribute 'fixed-pitch nil :family "Fira Code" :height 120)
+
+  ;; TODO: is this still needed to remvoe variable width font from modeline?
   (when (> emacs-major-version 28)
     (set-face-attribute 'mode-line-active nil :inherit 'mode-line))
 
