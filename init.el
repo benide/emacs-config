@@ -31,6 +31,11 @@
 ;; Packages, functions, etc.
 
 (require 'bootstrap-elpaca)
+
+;; Download use-package if it isn't built in
+(unless (fboundp 'use-package)
+  (elpaca use-package (require 'use-package)))
+
 (require 'i3-integration)
 (require 'my-functions)
 (require 'init-keybindings)
