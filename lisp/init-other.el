@@ -37,10 +37,14 @@
   :commands (LilyPond-mode))
 
 ;; note: When I install emacs via nix, I also use nix to install vterm. The following code ensures that when vterm is a dependency of something else, elpaca won't try to re-download and compile it.
-(if (require 'vterm nil 'noerror)
+;; (if (require 'vterm nil 'noerror)
+;;     (cl-pushnew 'vterm elpaca-ignored-dependencies)
+;;   (elpaca vterm
+;;     (require 'vterm)))
+(if (locate-library "vterm")
     (cl-pushnew 'vterm elpaca-ignored-dependencies)
-  (elpaca vterm
-    (require 'vterm)))
+  (elpaca vterm))
+(use-package vterm :ensure nil :defer t)
 
 (elpaca-use-package vterm-toggle
   :after vterm
