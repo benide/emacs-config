@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(elpaca-use-package projectile :demand t
+(ide/use-package projectile :demand t
   :custom
   (projectile-project-search-path '("/home/ben/Projects/"))
   :config

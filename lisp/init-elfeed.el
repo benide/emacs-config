@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(elpaca-use-package elfeed
+(ide/use-package elfeed
   :commands (ide/elfeed)
   ;; :hook ((elfeed-show-mode . visual-line-mode)
   ;; 	 (elfeed-show-mode . visual-fill-column-mode))
@@ -38,7 +38,7 @@
   (defalias 'elfeed-toggle-star
     (elfeed-expose #'elfeed-search-toggle-all 'star)))
 
-(elpaca-use-package elfeed-org
+(ide/use-package elfeed-org
   :after elfeed
   :config
   (elfeed-org)

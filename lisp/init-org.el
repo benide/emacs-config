@@ -2,9 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(elpaca-use-package org-contrib :after org)
-
-(elpaca-use-package org
+(ide/use-package org
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . turn-on-org-cdlatex)
          (org-mode . org-indent-mode)
@@ -33,8 +31,6 @@
                                   ,(expand-file-name "~/Documents/Library/calibre.bib")))
 
   :config
-  (require 'ox-extra)
-  (ox-extras-activate '(ignore-headlines))
   (require 'org-protocol)
 
   ;; capture templates
@@ -67,31 +63,37 @@
    '(("\\(\\[#A\\]\\)" (0 (progn (compose-region (match-beginning 1) (match-end 1) ?⚡) nil)))
      ("\\(\\[#B\\]\\)" (0 (progn (compose-region (match-beginning 1) (match-end 1) ?⬆) nil)))
      ("\\(\\[#C\\]\\)" (0 (progn (compose-region (match-beginning 1) (match-end 1) ?⬇) nil)))
-     ("\\(\\[#D\\]\\)" (0 (progn (compose-region (match-beginning 1) (match-end 1) ?☕) nil))))
+     ("\\(\\[#D\\]\\)" (0 (progn (compose-region (match-beginning 1) (match-end 1) ?☕) nil)))))
 
+(ide/use-package org-contrib
+  :after org
+  :config
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python . t)
-     (julia-vterm . t)
+     ; (julia-vterm . t)
      (asymptote . t)
      (lilypond . t)
      ))
-  (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
-  (defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm))
+  ; (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
+  ; (defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm)
+)
 
 ;; TODO: why do we need ox-html? I can't remember why this was added
-(elpaca-use-package ox-html :ensure nil :after ox)
-(elpaca-use-package ox-hugo :after ox)
+(ide/use-package ox-html :ensure nil :after ox)
+(ide/use-package ox-hugo :after ox)
 ;; TODO: ox-reveal
 
-(elpaca-use-package evil-org
+(ide/use-package evil-org
   :after org
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-(elpaca-use-package time-stamp
+(ide/use-package time-stamp
   :ensure nil
   :demand t
   :config

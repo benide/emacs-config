@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(elpaca-use-package auctex
+(ide/use-package auctex
   :mode ("\\.tex\\'" . latex-mode)
   ;; :diminish (visual-line-mode)
   :hook (LaTeX-mode . reftex-mode)
@@ -43,7 +43,7 @@
   (add-hook 'TeX-after-compilation-finished-functions
             #'TeX-revert-document-buffer))
 
-(elpaca-use-package cdlatex
+(ide/use-package cdlatex
   :hook (LaTeX-mode . turn-on-cdlatex)
   :config
   (setq cdlatex-use-dollar-to-ensure-math nil)
@@ -75,7 +75,7 @@ AUTOLABEL
   (setf cdlatex-math-modify-alist-default
 	(assoc-delete-all ?v cdlatex-math-modify-alist-default)))
 
-(elpaca-use-package auctex-latexmk
+(ide/use-package auctex-latexmk
   :after auctex
   :custom (auctex-latexmk-inherit-TeX-PDF-mode t)
   :config (auctex-latexmk-setup))

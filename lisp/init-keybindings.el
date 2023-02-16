@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(elpaca-use-package key-chord
+(ide/use-package key-chord
   ;; :demand t
   :custom
   (key-chord-two-keys-delay .05)
@@ -10,9 +10,9 @@
   :config
   (key-chord-mode 1))
 
-;; (elpaca-use-package use-package-chords)
+;; (ide/use-package use-package-chords)
 
-(elpaca-use-package evil
+(ide/use-package evil
   :demand t
   :init
   (setq evil-want-integration t)
@@ -20,25 +20,25 @@
   (setq evil-respect-visual-line-mode t)
   :config (evil-mode 1))
 
-(elpaca-use-package evil-collection
+(ide/use-package evil-collection
   :demand t
   :after evil
   :config
   (evil-collection-init))
 
-(elpaca-use-package evil-commentary
+(ide/use-package evil-commentary
   :demand t
   :after evil
   :diminish evil-commentary-mode
   :config (evil-commentary-mode))
 
-(elpaca-use-package evil-surround
+(ide/use-package evil-surround
   :demand t
   :after evil
   :diminish evil-surround-mode
   :config (global-evil-surround-mode 1))
 
-(elpaca-use-package general :demand t
+(ide/use-package general :demand t
   :config
 
   (general-create-definer ide/leader-def

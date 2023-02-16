@@ -2,8 +2,14 @@
 ;;; Commentary:
 ;;; Code:
 
-(elpaca-use-package pdf-tools
+(ide/use-package pdf-tools
   :config
+  (require 'pdf-occur)
+  (require 'pdf-history)
+  (require 'pdf-links)
+  (require 'pdf-outline)
+  (require 'pdf-annot)
+  (require 'pdf-sync)
   (pdf-tools-install)
   ;; (setq TeX-view-program-selection '((output-pdf "pdf-tools")))
   ;; (setq TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view")))

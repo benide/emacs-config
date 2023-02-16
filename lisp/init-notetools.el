@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(elpaca-use-package org-roam
+(ide/use-package org-roam
   :after org
   :commands
   (org-roam-buffer
@@ -48,30 +48,27 @@
 ;; TODO: org-roam-ui
 ;; TODO: some combo of bibtex actions, citar, org-cite, consult, embark, etc.
 
-(elpaca-use-package org-roam-bibtex
+(ide/use-package org-roam-bibtex
   :after org-roam
   )
 
-(elpaca-use-package citar
+(ide/use-package citar
   :custom
   (citar-bibliography `(,(expand-file-name "~/Documents/Library/zotero.bib")
                         ,(expand-file-name "~/Documents/Library/calibre.bib")))
   (citar-notes-path (expand-file-name "~/Projects/notes/roam/refs/"))
   (citar-open-note-function 'orb-citar-edit-note)
-  (citar-at-point-function 'embark-act))
-
-(elpaca-use-package citar-org
-  :ensure nil
-  :custom
+  (citar-at-point-function 'embark-act)
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar))
+  (org-cite-activate-processor 'citar)
+  (org-cite-global-bibliography citar-bibliography))
 
-(elpaca-use-package citar-embark
+(ide/use-package citar-embark
   :after citar embark
   :config (citar-embark-mode))
 
-(elpaca-use-package citar-org-roam
+(ide/use-package citar-org-roam
   :after citar org-roam
   :config (citar-org-roam-mode))
 

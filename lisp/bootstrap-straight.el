@@ -1,5 +1,7 @@
 ;;; bootstrap-straight.el ---  -*- lexical-binding: t; -*-
 
+;; Bootstrap copied from docs
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -12,5 +14,20 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+
+;; Set up straight-use-package
+
+(unless (fboundp 'use-package)
+  (straight-use-package 'use-package))
+(setq straight-use-package-by-default t)
+
+
+;; My macro that will not try to reinstall packages that nix has installed
+
+(defmacro ide/use-package (package &rest body)
+  (if (locate-library (symbol-name `,package))
+      (use-package ,package :straight nil ,@body)
+    `(use-package ,package ,@body)))
 
 (provide 'bootstrap-straight)

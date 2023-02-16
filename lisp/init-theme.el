@@ -2,9 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
-;; (elpaca-use-package ef-themes)
+;; (ide/use-package ef-themes)
 
-(elpaca-use-package telephone-line
+(ide/use-package telephone-line
   :demand t
   :config
   (telephone-line-mode 1))

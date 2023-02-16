@@ -102,7 +102,7 @@
     ("kill" (evil-quit))
     (- (swaymsg command))))
 
-(elpaca-use-package transpose-frame
+(ide/use-package transpose-frame
   :commands (transpose-frame))
 
 (provide 'i3-integration)
