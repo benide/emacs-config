@@ -29,9 +29,11 @@
               ("DEL" . vertico-directory-delete-char)
               ("M-DEL" . vertico-directory-delete-word))
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
-  :init (vertico-mode))
+  :init (vertico-mode)
+  :config (require 'vertico-directory))
 
 (ide/use-package marginalia
+  :after vertico
   :bind (:map minibuffer-local-map
          ("M-A" . marginalia-cycle))
   :init (marginalia-mode))

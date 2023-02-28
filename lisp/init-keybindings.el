@@ -3,7 +3,7 @@
 ;;; Code:
 
 (ide/use-package key-chord
-  ;; :demand t
+  :demand t
   :custom
   (key-chord-two-keys-delay .05)
   (key-chord-one-key-delay .15)
@@ -24,7 +24,8 @@
   :demand t
   :after evil
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  (evil-set-initial-state 'vterm-mode 'emacs))
 
 (ide/use-package evil-commentary
   :demand t
@@ -102,9 +103,9 @@
     (general-chord "$$") #'ide/latex-insert-doubledollar)
 
   ;; cdlatex
-  ;; (general-def '(override insert) cdlatex-mode-map
-  ;;   (general-chord "$$") #'ide/latex-insert-doubledollar
-  ;;   "$" #'ide/latex-insert-dollar)
+  (general-define-key :keymaps 'cdlatex-mode-map
+    (general-chord "$$") #'ide/latex-insert-doubledollar
+    "$" #'ide/latex-insert-dollar)
 
   ;; Elfeed
   (general-def '(normal visual) elfeed-search-mode-map

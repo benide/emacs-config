@@ -62,7 +62,8 @@
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
-  (org-cite-global-bibliography citar-bibliography))
+  (org-cite-global-bibliography `(,(expand-file-name "~/Documents/Library/zotero.bib")
+                                  ,(expand-file-name "~/Documents/Library/calibre.bib"))))
 
 (ide/use-package citar-embark
   :after citar embark

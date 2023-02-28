@@ -8,7 +8,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq mouse-wheel-progressive-speed nil)
 (setq mouse-wheel-scroll-amount '(3))
-(pixel-scroll-precision-mode)
+(pixel-scroll-precision-mode) ;; TODO: does this only work with GTK builds?
 (setq scroll-preserve-screen-position 1)
 (set-language-environment "UTF-8")
 (setq default-input-method "TeX")
@@ -27,6 +27,11 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
+;; modified from:
+;; https://sqrtminusone.xyz/configs/emacs/#custom-frame-title
+;; only needed for emacs-i3-integration with older versions of xdotool
+(setq-default frame-title-format
+	      '("" "%b - emacs@" (:eval (format "%s" (system-name)))))
 
 ;; Packages, functions, etc.
 

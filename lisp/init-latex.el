@@ -5,7 +5,25 @@
 (ide/use-package auctex
   :mode ("\\.tex\\'" . latex-mode)
   ;; :diminish (visual-line-mode)
-  :hook (LaTeX-mode . reftex-mode)
+  :hook ((LaTeX-mode . reftex-mode)
+         (LaTeX-mode .
+           (lambda ()
+             (TeX-engine-set "luatex")
+             (setq TeX-command-default "LatexMk")
+             (setq TeX-command-extra-options "-shell-escape")
+             (visual-line-mode)
+             (LaTeX-math-mode)
+             (add-to-list
+              'TeX-command-list
+              '("Nix build" "nix build"
+                TeX-run-command nil (latex-mode)
+                :help "Use a nix flake to build"))
+             (add-to-list
+              'TeX-command-list
+              '("LatexMk clean" "latexmk %t -c"
+                TeX-run-command nil t
+                :help "Delete all auxiliary files"))))
+         (LaTeX-mode . auctex-latexmk-setup))
   :custom
   (reftex-plug-into-AUCTeX t)
   (TeX-save-query nil)
@@ -14,32 +32,17 @@
   ;(TeX-auto-regexp-list 'TeX-auto-full-regexp-list)
   ;; (global-font-lock-mode t)
   (TeX-insert-braces nil)
-  ;; (LaTeX-item-indent 2)
+  (LaTeX-item-indent 2)
   (TeX-electric-escape nil)
-  ;; (TeX-electric-math (cons "\\(" ""))
+  (TeX-electric-math (cons "\\(" ""))
   (TeX-electric-sub-and-superscript nil)
   (TeX-source-correlate-mode t)
   (TeX-interactive-mode t)
+  (TeX-PDF-mode t)
   (TeX-view-program-selection '((output-pdf "pdf-tools")))
   (TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view")))
-  :config
-  (add-hook 'LaTeX-mode-hook
-            (lambda ()
-              (TeX-engine-set "luatex")
-              (setq TeX-command-default "LatexMk")
-              (setq TeX-command-extra-options "-shell-escape")
-              (visual-line-mode)
-              (LaTeX-math-mode)
-              (add-to-list
-               'TeX-command-list
-               '("Nix build" "nix build"
-                 TeX-run-command nil (latex-mode)
-                 :help "Use a nix flake to build"))
-              (add-to-list
-               'TeX-command-list
-               '("LatexMk clean" "latexmk %t -c"
-                 TeX-run-command nil t
-                 :help "Delete all auxiliary files"))))
+  (TeX-command-default "LatexMk")
+  :init
   (add-hook 'TeX-after-compilation-finished-functions
             #'TeX-revert-document-buffer))
 
@@ -76,9 +79,8 @@ AUTOLABEL
 	(assoc-delete-all ?v cdlatex-math-modify-alist-default)))
 
 (ide/use-package auctex-latexmk
-  :after auctex
-  :custom (auctex-latexmk-inherit-TeX-PDF-mode t)
-  :config (auctex-latexmk-setup))
+  :commands (auctex-latexmk-setup)
+  :custom (auctex-latexmk-inherit-TeX-PDF-mode t))
 
 
 

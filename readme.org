@@ -1,6 +1,6 @@
 * My Emacs config
 
-This is a new repo with my emacs config converted from [[https://github.com/radian-software/straight.el][straight]] to [[https://github.com/progfolio/elpaca][elpaca]]. It's kind of a constant work in progress. While switching to elpaca, I decided to switch from helm-bibtex to citar, and that isn't quite done. There are some other little things that I tried to clean up while converting that also aren't done.
+This is a new repo with my emacs config converted from [[https://github.com/radian-software/straight.el][straight]] to [[https://github.com/progfolio/elpaca][elpaca]]. It's a constant work in progress. While switching to elpaca, I decided to switch from helm-bibtex to citar, and that isn't done at all. There are other things that are half-baked as well.
 
 ** Problems
 
@@ -13,19 +13,41 @@ This is a new repo with my emacs config converted from [[https://github.com/radi
 On NixOS, it's best to let Nix take care of compiling the vterm module. Since it's already there, we don't want elpaca to download it again and try to compile it. The following macro allows elpaca to take care of it when it isn't installed, but otherwise stops elpaca from trying to install it even as a dependency (like when installing vterm-toggle).
 
 #+begin_src elisp
-(defmacro ide/elpaca-use-package (package &rest body)
-  (if (locate-library (symbol-name `,package))
-      `(progn
-	     (cl-pushnew (quote ,package) elpaca-ignored-dependencies)
-	     (elpaca-use-package ,package :ensure nil ,@body))
-    `(elpaca-use-package ,package ,@body)))
+(defvar ide/try-built-in-by-default t)
 
-(ide/elpaca-use-package vterm :defer t)
+(defmacro ide/use-package (package &rest body)
+  (let* ((body-without-prop (use-package-plist-delete body :try-built-in))
+         (prop-exists (plist-member body :try-built-in))
+         (prop-value (plist-get body :try-built-in))
+         (try-built-in (or prop-value
+                           (and ide/try-built-in-by-default
+                                (not prop-exists)))))
+    (if (and try-built-in
+             (locate-library (symbol-name `,package)))
+        `(progn
+           (cl-pushnew (quote ,package) elpaca-ignored-dependencies)
+           (use-package ,package :elpaca nil ,@body-without-prop))
+      `(use-package ,package ,@body-without-prop))))
+
+(ide/use-package vterm)
+#+end_src
+
+I can still install something built-in from a recipe as well:
+
+#+begin_src elisp
+(ide/use-package org :try-built-in nil)
+#+end_src
+
+I can also go the other way with the default and explicitly list which things should check for a built-in version:
+
+#+begin_src elisp
+(setq ide/try-built-in-by-default nil)
+(ide/use-package vterm :try-built-in t)
 #+end_src
 
 *** use-package in Emacs 29
 
-As of Emacs 29, =use-package= is built in. This snippet only installs it when the function doesn't already exist.
+As of Emacs 29, =use-package= is built in. This only installs it when the function doesn't already exist.
 
 #+begin_src elisp
 (unless (fboundp 'use-package)

@@ -40,16 +40,34 @@
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
   (setq elpaca-use-package-by-default t))
-(elpaca-wait)
 
 ;; My macro that will not try to reinstall packages that nix has installed
 
+(defvar ide/try-built-in-by-default t)
+
 (defmacro ide/use-package (package &rest body)
-  (if (locate-library (symbol-name `,package))
-      `(progn
-	     (cl-pushnew (quote ,package) elpaca-ignored-dependencies)
-	     (use-package ,package :elpaca nil ,@body))
-    `(use-package ,package ,@body)))
+  (let* ((body-without-prop (use-package-plist-delete body :try-built-in))
+         (prop-exists (plist-member body :try-built-in))
+         (prop-value (plist-get body :try-built-in))
+         (try-built-in (or prop-value
+                           (and ide/try-built-in-by-default
+                                (not prop-exists)))))
+    (if (and try-built-in
+             (locate-library (symbol-name `,package)))
+        `(progn
+           (cl-pushnew (quote ,package) elpaca-ignored-dependencies)
+           (use-package ,package :elpaca nil ,@body-without-prop))
+      `(use-package ,package ,@body-without-prop))))
+
+(elpaca-wait)
+
+;; Old version of the macro:
+;; (defmacro ide/use-package (package &rest body)
+;;   (if (locate-library (symbol-name `,package))
+;;       `(progn
+;; 	     (cl-pushnew (quote ,package) elpaca-ignored-dependencies)
+;; 	     (use-package ,package :elpaca nil ,@body))
+;;     `(use-package ,package ,@body)))
 
 ;; Here is an example that kinda also worked:
 ;; (if (require 'vterm nil 'noerror)

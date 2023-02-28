@@ -7,7 +7,18 @@
 (ide/use-package yaml-mode :mode "\\.yml\\'")
 (ide/use-package json-mode :mode "\\.json\\'")
 (ide/use-package ess :mode ("\\.[rR]\\'" . R-mode))
+
 (ide/use-package julia-mode :mode "\\.jl\\'")
+(ide/use-package julia-repl :hook julia-mode
+  :custom
+  (julia-repl-executable-records
+   '((default "julia")
+     (release "julia @release")
+     (lts "julia @lts")
+     (beta "julia @beta")
+     (dev "julia @dev")))
+  :config
+  (julia-repl-set-terminal-backend 'vterm))
 
 (ide/use-package markdown-mode
   :commands (markdown-mode gfm-mode)
@@ -36,11 +47,7 @@
   :mode ("\\.ly$" . LilyPond-mode)
   :commands (LilyPond-mode))
 
-;; (if (require 'vterm nil 'noerror)
-;;     (cl-pushnew 'vterm ide/ignored-dependencies)
-;;   (elpaca vterm
-;;     (require 'vterm)))
-(ide/use-package vterm :defer t)
+(ide/use-package vterm)
 
 (ide/use-package vterm-toggle
   :after vterm
@@ -50,15 +57,14 @@
          ("<f2>" . vterm-toggle-hide)
          ("C-<f2>" . vterm-toggle-insert-cd)))
 
-;; TODO: replace julia-vterm with julia-repl or julia-snail
-(ide/use-package julia-vterm)
 
 ;; TODO: replace ob-julia-vterm with ob-jupyter
-(ide/use-package ob-julia-vterm :elpaca (:type git
-                                    :host github
-                                    :repo "shg/ob-julia-vterm.el"
-                                    ;; :ref  "5893d75cdb9e687b98b99b3675165f4edf0083a6"
-                                    ))
+;; (ide/use-package julia-vterm)
+;; (ide/use-package ob-julia-vterm :elpaca (:type git
+;;                                     :host github
+;;                                     :repo "shg/ob-julia-vterm.el"
+;;                                     ;; :ref  "5893d75cdb9e687b98b99b3675165f4edf0083a6"
+;;                                     ))
 
 (ide/use-package magit
   :config
