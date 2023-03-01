@@ -1,14 +1,14 @@
 * My Emacs config
 
-This is a new repo with my emacs config converted from [[https://github.com/radian-software/straight.el][straight]] to [[https://github.com/progfolio/elpaca][elpaca]]. It's a constant work in progress. While switching to elpaca, I decided to switch from helm-bibtex to citar, and that isn't done at all. There are other things that are half-baked as well.
+This is a new repo with my emacs config converted from [[https://github.com/radian-software/straight.el][straight]] to [[https://github.com/progfolio/elpaca][elpaca]]. It's a work in progress. While switching to elpaca, I decided to switch from helm-bibtex to citar, and that isn't done. There are other things that are half-baked as well.
 
-** Problems
+** To do
 
 - How can I get ob-lilypond to fontify properly?
+- Figure out citar
+- set up eglot
 
-** Some neat things
-
-*** NixOS and vterm
+** NixOS and vterm
 
 On NixOS, it's best to let Nix take care of compiling the vterm module. Since it's already there, we don't want elpaca to download it again and try to compile it. The following macro allows elpaca to take care of it when it isn't installed, but otherwise stops elpaca from trying to install it even as a dependency (like when installing vterm-toggle).
 
@@ -38,14 +38,14 @@ I can still install something built-in from a recipe as well:
 (ide/use-package org :try-built-in nil)
 #+end_src
 
-I can also go the other way with the default and explicitly list which things should check for a built-in version:
+I can also go the other way with the default behavior and explicitly list which things should check for a built-in version:
 
 #+begin_src elisp
 (setq ide/try-built-in-by-default nil)
 (ide/use-package vterm :try-built-in t)
 #+end_src
 
-*** use-package in Emacs 29
+** use-package in Emacs 29
 
 As of Emacs 29, =use-package= is built in. This only installs it when the function doesn't already exist.
 
@@ -53,4 +53,3 @@ As of Emacs 29, =use-package= is built in. This only installs it when the functi
 (unless (fboundp 'use-package)
   (elpaca use-package (require 'use-package)))
 #+end_src
-
