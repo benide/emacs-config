@@ -27,7 +27,7 @@
 
 (defmacro ide/use-package (package &rest body)
   (if (locate-library (symbol-name `,package))
-      (use-package ,package :straight nil ,@body)
+      `(use-package ,package :straight nil ,@body)
     `(use-package ,package ,@body)))
 
 (provide 'bootstrap-straight)
