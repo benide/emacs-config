@@ -26,8 +26,9 @@
   (setq modus-themes-org-blocks 'gray-background)
   (load-theme 'modus-vivendi t)
 
-  ;; copy of modus-themes v3 setup for telephone-line
   (when (> emacs-major-version 29)
+    ;; copy of modus-themes v3 setup for telephone-line
+    ;; only needed for modus-themes v4+ which started shipping with emacs 30
     (modus-themes-with-colors
       (custom-set-faces
         `(telephone-line-accent-active ((,c :background ,fg-mode-line-inactive :foreground ,bg-mode-line-inactive)))
