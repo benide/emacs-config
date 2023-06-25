@@ -27,28 +27,28 @@
   (load-theme 'modus-vivendi t)
 
   ;; copy of modus-themes v3 setup for telephone-line
-  (modus-themes-with-colors
-    (custom-set-faces
-     `(telephone-line-accent-active ((,c :background ,fg-mode-line-inactive :foreground ,bg-mode-line-inactive)))
-     `(telephone-line-accent-inactive ((,c :background ,bg-mode-line-active :foreground ,fg-mode-line-active)))
-     `(telephone-line-error ((,c :inherit bold :foreground ,modeline-err)))
-     `(telephone-line-evil ((,c :foreground ,fg-main)))
-     `(telephone-line-evil-emacs ((,c :inherit telephone-line-evil :background ,bg-magenta-intense)))
-     `(telephone-line-evil-insert ((,c :inherit telephone-line-evil :background ,bg-green-intense)))
-     `(telephone-line-evil-motion ((,c :inherit telephone-line-evil :background ,bg-yellow-intense)))
+  (when (> emacs-major-version 29)
+    (modus-themes-with-colors
+      (custom-set-faces
+        `(telephone-line-accent-active ((,c :background ,fg-mode-line-inactive :foreground ,bg-mode-line-inactive)))
+        `(telephone-line-accent-inactive ((,c :background ,bg-mode-line-active :foreground ,fg-mode-line-active)))
+        `(telephone-line-error ((,c :inherit bold :foreground ,modeline-err)))
+        `(telephone-line-evil ((,c :foreground ,fg-main)))
+        `(telephone-line-evil-emacs ((,c :inherit telephone-line-evil :background ,bg-magenta-intense)))
+        `(telephone-line-evil-insert ((,c :inherit telephone-line-evil :background ,bg-green-intense)))
+        `(telephone-line-evil-motion ((,c :inherit telephone-line-evil :background ,bg-yellow-intense)))
 
-     ;; color should be f0f0f0 with modus-operandi, 191a1b for modus-vivdendi. used to be caled bg-alt
-     ;; should I just choose bg-dim instead?
-     ;; `(telephone-line-evil-normal ((,c :inherit telephone-line-evil :background "#191a1b")))
-     `(telephone-line-evil-normal ((,c :inherit telephone-line-evil :background ,bg-dim)))
+        ;; color should be f0f0f0 with modus-operandi, 191a1b for modus-vivdendi. used to be caled bg-alt
+        ;; should I just choose bg-dim instead?
+        ;; `(telephone-line-evil-normal ((,c :inherit telephone-line-evil :background "#191a1b")))
+        `(telephone-line-evil-normal ((,c :inherit telephone-line-evil :background ,bg-dim)))
 
-     `(telephone-line-evil-operator ((,c :inherit telephone-line-evil :background ,bg-yellow-subtle)))
-     `(telephone-line-evil-replace ((,c :inherit telephone-line-evil :background ,bg-red-intense)))
-     `(telephone-line-evil-visual ((,c :inherit telephone-line-evil :background ,bg-cyan-intense)))
-     `(telephone-line-projectile ((,c :foreground ,modeline-info)))
-     `(telephone-line-unimportant ((,c :foreground ,fg-mode-line-inactive)))
-     `(telephone-line-warning ((,c :inherit bold :foreground ,modeline-warning)))))
-)
+        `(telephone-line-evil-operator ((,c :inherit telephone-line-evil :background ,bg-yellow-subtle)))
+        `(telephone-line-evil-replace ((,c :inherit telephone-line-evil :background ,bg-red-intense)))
+        `(telephone-line-evil-visual ((,c :inherit telephone-line-evil :background ,bg-cyan-intense)))
+        `(telephone-line-projectile ((,c :foreground ,modeline-info)))
+        `(telephone-line-unimportant ((,c :foreground ,fg-mode-line-inactive)))
+        `(telephone-line-warning ((,c :inherit bold :foreground ,modeline-warning)))))))
 
 
 (defvar ide/is-theme-loaded nil)
