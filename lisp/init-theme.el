@@ -29,6 +29,7 @@
   (when (> emacs-major-version 29)
     ;; copy of modus-themes v3 setup for telephone-line
     ;; only needed for modus-themes v4+ which started shipping with emacs 30
+    ;; TODO: these colors don't look as good as what was in v3...
     (modus-themes-with-colors
       (custom-set-faces
         `(telephone-line-accent-active ((,c :background ,fg-mode-line-inactive :foreground ,bg-mode-line-inactive)))
